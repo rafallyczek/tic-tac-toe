@@ -13,6 +13,7 @@
   --clr-dark: hsl(0, 0%, 27%);
 
   --clr-primary: hsl(207, 44%, 49%);
+  --clr-primary-medium: hsl(193, 100%, 90%);
   --clr-primary-light: hsl(193, 100%, 96%);
 }
 
@@ -50,6 +51,29 @@ main {
 footer {
   display: grid;
   place-content: center;
+}
+
+.gameboard {
+  display: grid;
+  grid-template: repeat(3, 100px) / repeat(3, 100px);
+  gap: 3px;
+  font-size: 0;
+}
+
+/* Buttons */
+
+.boardTile {
+  width: 100px;
+  height: 100px;
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  background-color: var(--clr-primary-light);
+  font-size: 1rem;
+}
+
+.boardTile:hover {
+  background-color: var(--clr-primary-medium);
 }
 
 /* Utility classes */
