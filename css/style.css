@@ -8,7 +8,64 @@
   box-sizing: border-box;
 }
 
-body {
+:root {
+  --clr-light: hsl(0, 0%, 98%);
+  --clr-dark: hsl(0, 0%, 27%);
+
+  --clr-primary: hsl(207, 44%, 49%);
+  --clr-primary-light: hsl(193, 100%, 96%);
+}
+
+body,
+html {
+  height: 100%;
   margin: 0;
   font-family: "Roboto";
+  color: var(--clr-light);
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--clr-light);
+}
+
+/* Layout */
+
+.container {
+  display: grid;
+  grid-template-rows: 100px 1fr 50px;
+  height: 100%;
+}
+
+header,
+main {
+  display: grid;
+  place-items: center;
+}
+
+footer {
+  display: grid;
+  place-content: center;
+}
+
+/* Utility classes */
+
+.text-center {
+  text-align: center;
+}
+
+.bgc-primary {
+  background-color: var(--clr-primary);
+}
+
+.bgc-primary-light {
+  background-color: var(--clr-primary-light);
+}
+
+.text-clr-dark {
+  color: var(--clr-dark);
 }

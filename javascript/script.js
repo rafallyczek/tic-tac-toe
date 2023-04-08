@@ -1,0 +1,3 @@
+const gameModule = (() => {
+  const gameboard = [];
+})();
