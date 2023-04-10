@@ -4,6 +4,7 @@ const gameModule = (() => {
     ["", "", ""],
     ["", "", ""],
   ];
+  let currentPlayer = "X";
 
   //DOM
   const board = document.querySelector(".gameboard");
@@ -34,9 +35,12 @@ const gameModule = (() => {
   }
 
   function _updateBoard(i, j) {
-    gameboard[i][j] = "X";
+    gameboard[i][j] = currentPlayer;
+    if (currentPlayer === "X") {
+      currentPlayer = "O";
+    } else {
+      currentPlayer = "X";
+    }
     _displayBoard();
   }
-
-  
 })();
