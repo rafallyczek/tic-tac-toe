@@ -1,5 +1,9 @@
 const gameModule = (() => {
-  const gameboard = [];
+  const gameboard = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ];
 
   //DOM
   const board = document.querySelector(".gameboard");
@@ -8,13 +12,16 @@ const gameModule = (() => {
 
   function _displayBoard() {
     _clearBoard();
-    for (let i = 0; i < 9; i++) {
-      const button = document.createElement("button");
-      button.classList.add("boardTile");
-      if (gameboard[i]) {
-        button.textContent = gameboard[i];
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        const button = document.createElement("button");
+        button.classList.add("boardTile");
+        button.textContent = gameboard[i][j];
+        button.addEventListener("click", () => {
+          _updateBoard(i, j);
+        });
+        board.appendChild(button);
       }
-      board.appendChild(button);
     }
   }
 
@@ -25,4 +32,11 @@ const gameModule = (() => {
       child = board.firstElementChild;
     }
   }
+
+  function _updateBoard(i, j) {
+    gameboard[i][j] = "X";
+    _displayBoard();
+  }
+
+  
 })();

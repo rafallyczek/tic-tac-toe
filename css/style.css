@@ -15,6 +15,10 @@
   --clr-primary: hsl(207, 44%, 49%);
   --clr-primary-medium: hsl(193, 100%, 90%);
   --clr-primary-light: hsl(193, 100%, 96%);
+
+  --fw-600: 600;
+
+  --fs-large: 2rem;
 }
 
 body,
@@ -69,7 +73,9 @@ footer {
   border: none;
   cursor: pointer;
   background-color: var(--clr-primary-light);
-  font-size: 1rem;
+  color: var(--clr-primary);
+  font-weight: var(--fw-600);
+  font-size: var(--fs-large);
 }
 
 .boardTile:hover {
