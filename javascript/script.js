@@ -18,9 +18,11 @@ const gameModule = (() => {
         const button = document.createElement("button");
         button.classList.add("boardTile");
         button.textContent = gameboard[i][j];
-        button.addEventListener("click", () => {
-          _updateBoard(i, j);
-        });
+        if (!gameboard[i][j]) {
+          button.addEventListener("click", () => {
+            _updateBoard(i, j);
+          });
+        }
         board.appendChild(button);
       }
     }
@@ -43,4 +45,7 @@ const gameModule = (() => {
     }
     _displayBoard();
   }
+
+  //TODO: Implement checking for win/lose/draw logic
+  function _checkBoard() {}
 })();
