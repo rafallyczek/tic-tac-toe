@@ -16,11 +16,23 @@
             <h1 class="fs-large">Tic Tac Toe</h1>
         </header>
         <main class="bgc-primary-light text-clr-dark">
-            <p class="result text-center fs-medium"></p>
-            <div class="gameboard bgc-primary">
-                
+            <div class="mode">
+                <p class="text-center fs-medium">Choose game mode:</p>
+                <div>
+                    <button class="playervsplayer button">Player vs Player</button>
+                    <button class="playervspc button">Player vs PC</button>
+                </div>
             </div>
-            <button class="restart" disabled>Play again</button>
+            <div class="game">
+                <p class="result text-center fs-medium"></p>
+                <div class="gameboard bgc-primary">
+                    
+                </div>
+                <div>
+                    <button class="restart button" disabled>Play again</button>
+                    <button class="mode-change button">Change mode</button>
+                </div>
+            </div>
         </main>
         <footer class="bgc-primary text-center">
             <p>Made by <a href="https://github.com/rafallyczek">rafallyczek</a></p>

@@ -5,14 +5,35 @@ const gameModule = (() => {
     ["", "", ""],
   ];
   let currentPlayer = "X";
+  let vsPc = false;
 
   //DOM
   const board = document.querySelector(".gameboard");
   const result = document.querySelector(".result");
   const restart = document.querySelector(".restart");
+  const playerVsPlayer = document.querySelector(".playervsplayer");
+  const playerVsPc = document.querySelector(".playervspc");
+  const game = document.querySelector(".game");
+  const mode = document.querySelector(".mode");
+  const modeChange = document.querySelector(".mode-change");
 
   //Listeners
   restart.addEventListener("click", _reset);
+  playerVsPlayer.addEventListener("click", () => {
+    game.style.display = "grid";
+    mode.style.display = "none";
+    vsPc = false;
+  });
+  playerVsPc.addEventListener("click", () => {
+    game.style.display = "grid";
+    mode.style.display = "none";
+    vsPc = true;
+  });
+  modeChange.addEventListener("click", () => {
+    game.style.display = "none";
+    mode.style.display = "grid";
+    _reset();
+  });
 
   _displayBoard();
   result.textContent = `Player ${currentPlayer} turn.`;
@@ -117,6 +138,16 @@ const gameModule = (() => {
     result.textContent = `Player ${currentPlayer} turn.`;
     restart.disabled = true;
     _displayBoard();
+  }
+
+  //TODO: implement minimax algorithm
+  function _minimax(depth) {
+    let value = currentPlayer === "O" ? 2 : -2;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+
+      }
+    }
   }
 
 })();
