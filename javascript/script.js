@@ -48,7 +48,7 @@ const gameModule = (() => {
     _displayBoard();
   }
 
-  function _checkBoard() {
+  function _checkForWin() {
     if ( gameboard[0][0] === currentPlayer && gameboard[1][1] === currentPlayer && gameboard[2][2] === currentPlayer ) {
       return true;
     } else if ( gameboard[0][2] === currentPlayer && gameboard[1][1] === currentPlayer && gameboard[2][0] === currentPlayer ) {
@@ -66,6 +66,17 @@ const gameModule = (() => {
     return false;
   }
 
+  function _checkForTie() {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (gameboard[i][j] === "") {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   function _disableBoard() {
     const buttons = board.children;
     for (const button of buttons) {
@@ -74,10 +85,14 @@ const gameModule = (() => {
   }
 
   function _updateResult() {
-    if(_checkBoard()){
+    if(_checkForWin()){
       _disableBoard();
       restart.removeAttribute("disabled");
       result.textContent = `Player ${currentPlayer} won the game!`;
+    }else if(_checkForTie()){
+      _disableBoard();
+      restart.removeAttribute("disabled");
+      result.textContent = `It's a tie!`;
     }else{
       _togglePlayer();
       result.textContent = `Player ${currentPlayer} turn.`;
