@@ -63,7 +63,7 @@ main {
   display: grid;
   place-content: center;
   justify-items: center;
-  gap: 10px;
+  gap: 1.5rem;
 }
 
 .gameboard {

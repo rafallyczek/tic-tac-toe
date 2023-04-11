@@ -85,15 +85,15 @@ const gameModule = (() => {
   }
 
   function _updateResult() {
-    if(_checkForWin()){
+    if (_checkForWin()) {
       _disableBoard();
       restart.removeAttribute("disabled");
       result.textContent = `Player ${currentPlayer} won the game!`;
-    }else if(_checkForTie()){
+    } else if (_checkForTie()) {
       _disableBoard();
       restart.removeAttribute("disabled");
       result.textContent = `It's a tie!`;
-    }else{
+    } else {
       _togglePlayer();
       result.textContent = `Player ${currentPlayer} turn.`;
     }
