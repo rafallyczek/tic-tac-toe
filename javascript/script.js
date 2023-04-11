@@ -1,88 +1,80 @@
-//TODO: Divide gameModule into smaller modules: board, gameController,
-//      display etc.
-
-const gameModule = (() => {
-  const gameboard = [
+//Contains game board and performs operations on it
+const gameBoard = (() => {
+  const _board = [
     ["", "", ""],
     ["", "", ""],
     ["", "", ""],
   ];
-  let currentPlayer = "X";
-  let vsPc = false;
+
+  function resetBoard() {
+    _board[0] = ["", "", ""];
+    _board[1] = ["", "", ""];
+    _board[2] = ["", "", ""];
+  }
+
+  function getBoardTile(x, y) {
+    return _board[x][y];
+  }
+
+  function setBoardTile(x, y, playerChar) {
+    _board[x][y] = playerChar;
+  }
+
+  return { resetBoard, getBoardTile, setBoardTile };
+})();
+
+//Controlls flow of the game
+const gameController = (() => {
+  let _currentPlayer = "X";
 
   //DOM
-  const board = document.querySelector(".gameboard");
-  const result = document.querySelector(".result");
   const restart = document.querySelector(".restart");
-  const playerVsPlayer = document.querySelector(".playervsplayer");
-  const playerVsPc = document.querySelector(".playervspc");
-  const game = document.querySelector(".game");
-  const mode = document.querySelector(".mode");
-  const modeChange = document.querySelector(".mode-change");
 
   //Listeners
-  restart.addEventListener("click", _reset);
-  playerVsPlayer.addEventListener("click", () => {
-    game.style.display = "grid";
-    mode.style.display = "none";
-    vsPc = false;
-  });
-  playerVsPc.addEventListener("click", () => {
-    game.style.display = "grid";
-    mode.style.display = "none";
-    vsPc = true;
-  });
-  modeChange.addEventListener("click", () => {
-    game.style.display = "none";
-    mode.style.display = "grid";
-    _reset();
-  });
+  restart.addEventListener("click", _restartGame);
 
-  _displayBoard();
-  result.textContent = `Player ${currentPlayer} turn.`;
+  function getCurrentPlayer() {
+    return _currentPlayer;
+  }
 
-  function _displayBoard() {
-    _clearBoard();
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        const button = document.createElement("button");
-        button.classList.add("boardTile");
-        button.textContent = gameboard[i][j];
-        if (!gameboard[i][j]) {
-          button.addEventListener("click", () => {
-            _updateBoard(i, j);
-            _updateResult();
-          });
-        }
-        board.appendChild(button);
+  function _setCurrentPlayer(playerChar) {
+    _currentPlayer = playerChar;
+  }
+
+  function _restartGame(){
+    gameBoard.resetBoard();
+    display.displayBoard();
+    _setCurrentPlayer("X");
+    display.updateResult(`Player ${_currentPlayer} turn.`);
+  }
+
+  function playerMove(x, y) {
+    if (gameBoard.getBoardTile(x, y) === "") {
+      gameBoard.setBoardTile(x, y, _currentPlayer);
+      if (_checkForWin()) {
+        display.disableBoard();
+        display.updateResult(`Player ${_currentPlayer} has won the game!`);
+      } else if (_checkForTie()) {
+        display.disableBoard();
+        display.updateResult(`It's a tie!`);
+      } else {
+        _setCurrentPlayer(_currentPlayer === "X" ? "O" : "X");
+        display.updateResult(`Player ${_currentPlayer} turn.`);
       }
     }
   }
 
-  function _clearBoard() {
-    let child = board.firstElementChild;
-    while (child) {
-      board.removeChild(child);
-      child = board.firstElementChild;
-    }
-  }
-
-  function _updateBoard(i, j) {
-    gameboard[i][j] = currentPlayer;
-    _displayBoard();
-  }
-
   function _checkForWin() {
-    if ( gameboard[0][0] === currentPlayer && gameboard[1][1] === currentPlayer && gameboard[2][2] === currentPlayer ) {
+    if ( gameBoard.getBoardTile(0, 0) === _currentPlayer && gameBoard.getBoardTile(1, 1) === _currentPlayer && gameBoard.getBoardTile(2, 2) === _currentPlayer ) {
       return true;
-    } else if ( gameboard[0][2] === currentPlayer && gameboard[1][1] === currentPlayer && gameboard[2][0] === currentPlayer ) {
+    } else if ( gameBoard.getBoardTile(0, 2) === _currentPlayer && gameBoard.getBoardTile(1, 1) === _currentPlayer && gameBoard.getBoardTile(2, 0) === _currentPlayer ) {
       return true;
     } else {
       for (let i = 0; i < 3; i++) {
-        if ( gameboard[0][i] === currentPlayer && gameboard[1][i] === currentPlayer && gameboard[2][i] === currentPlayer ) {
+        if ( gameBoard.getBoardTile(0, i) === _currentPlayer && gameBoard.getBoardTile(1, i) === _currentPlayer && gameBoard.getBoardTile(2, i) === _currentPlayer ) {
           return true;
         }
-        if ( gameboard[i][0] === currentPlayer && gameboard[i][1] === currentPlayer && gameboard[i][2] === currentPlayer ) {
+        if ( gameBoard.getBoardTile(i, 0) === _currentPlayer && gameBoard.getBoardTile(i, 1) === _currentPlayer && gameBoard.getBoardTile(i, 2) === _currentPlayer ) {
           return true;
         }
       }
@@ -93,7 +85,7 @@ const gameModule = (() => {
   function _checkForTie() {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
-        if (gameboard[i][j] === "") {
+        if (gameBoard.getBoardTile(i, j) === "") {
           return false;
         }
       }
@@ -101,51 +93,80 @@ const gameModule = (() => {
     return true;
   }
 
-  function _disableBoard() {
-    const buttons = board.children;
+  //TODO: implement minimax algorithm
+  function _minimax(depth) {
+    let value = _currentPlayer === "O" ? 2 : -2;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {}
+    }
+  }
+
+  return { getCurrentPlayer, playerMove };
+})();
+
+//Updates display
+const display = (() => {
+  //DOM
+  const _boardContainer = document.querySelector(".gameboard");
+  const _result = document.querySelector(".result");
+  const _playerVsPlayer = document.querySelector(".playervsplayer");
+  const _playerVsPc = document.querySelector(".playervspc");
+  const _game = document.querySelector(".game");
+  const _mode = document.querySelector(".mode");
+  const _modeChange = document.querySelector(".mode-change");
+
+  //Listeners
+  _playerVsPlayer.addEventListener("click", () => {
+    _game.style.display = "grid";
+    _mode.style.display = "none";
+  });
+  _playerVsPc.addEventListener("click", () => {
+    _game.style.display = "grid";
+    _mode.style.display = "none";
+  });
+  _modeChange.addEventListener("click", () => {
+    _game.style.display = "none";
+    _mode.style.display = "grid";
+    gameController.restartGame();
+  });
+
+  updateResult(`Player ${gameController.getCurrentPlayer()} turn.`);
+  displayBoard();
+
+  function displayBoard() {
+    _clearBoard();
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        const boardTile = document.createElement("button");
+        boardTile.classList.add("boardTile");
+        boardTile.textContent = gameBoard.getBoardTile(i, j);
+        boardTile.addEventListener("click", function () {
+            this.textContent = gameController.getCurrentPlayer();
+            gameController.playerMove(i, j);
+          });
+        _boardContainer.appendChild(boardTile);
+      }
+    }
+  }
+
+  function _clearBoard() {
+    let child = _boardContainer.firstElementChild;
+    while (child) {
+      _boardContainer.removeChild(child);
+      child = _boardContainer.firstElementChild;
+    }
+  }
+
+  function disableBoard() {
+    const buttons = _boardContainer.children;
     for (const button of buttons) {
       button.disabled = true;
     }
   }
 
-  function _updateResult() {
-    if (_checkForWin()) {
-      _disableBoard();
-      result.textContent = `Player ${currentPlayer} won the game!`;
-    } else if (_checkForTie()) {
-      _disableBoard();
-      result.textContent = `It's a tie!`;
-    } else {
-      _togglePlayer();
-      result.textContent = `Player ${currentPlayer} turn.`;
-    }
+  function updateResult(message) {
+    _result.textContent = message;
   }
 
-  function _togglePlayer(){
-    if (currentPlayer === "X") {
-      currentPlayer = "O";
-    } else {
-      currentPlayer = "X";
-    }
-  }
-
-  function _reset() {
-    gameboard[0] = ["", "", ""];
-    gameboard[1] = ["", "", ""];
-    gameboard[2] = ["", "", ""];
-    currentPlayer = "X";
-    result.textContent = `Player ${currentPlayer} turn.`;
-    _displayBoard();
-  }
-
-  //TODO: implement minimax algorithm
-  function _minimax(depth) {
-    let value = currentPlayer === "O" ? 2 : -2;
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-
-      }
-    }
-  }
-
+  return { displayBoard, disableBoard, updateResult };
 })();
