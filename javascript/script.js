@@ -9,6 +9,10 @@ const gameModule = (() => {
   //DOM
   const board = document.querySelector(".gameboard");
   const result = document.querySelector(".result");
+  const restart = document.querySelector(".restart");
+
+  //Listeners
+  restart.addEventListener("click", _reset);
 
   _displayBoard();
   result.textContent = `Player ${currentPlayer} turn.`;
@@ -72,6 +76,7 @@ const gameModule = (() => {
   function _updateResult() {
     if(_checkBoard()){
       _disableBoard();
+      restart.removeAttribute("disabled");
       result.textContent = `Player ${currentPlayer} won the game!`;
     }else{
       _togglePlayer();
@@ -85,6 +90,18 @@ const gameModule = (() => {
     } else {
       currentPlayer = "X";
     }
+  }
+
+  function _reset() {
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        gameboard[i][j] = "";
+      }
+    }
+    currentPlayer = "X";
+    result.textContent = `Player ${currentPlayer} turn.`;
+    restart.disabled = true;
+    _displayBoard();
   }
 
 })();

@@ -12,6 +12,7 @@
   --clr-light: hsl(0, 0%, 98%);
   --clr-dark: hsl(0, 0%, 27%);
 
+  --clr-primary-dark: hsl(207, 44%, 40%);
   --clr-primary: hsl(207, 44%, 49%);
   --clr-primary-medium: hsl(193, 100%, 90%);
   --clr-primary-light: hsl(193, 100%, 96%);
@@ -20,6 +21,7 @@
 
   --fs-large: 3rem;
   --fs-medium: 2rem;
+  --fs-small: 1.2rem;
 }
 
 body,
@@ -87,6 +89,25 @@ main {
 
 .boardTile:hover {
   background-color: var(--clr-primary-medium);
+}
+
+.restart{
+  border: none;
+  border-radius: .2rem;
+  padding: .5rem 1rem;
+  color: var(--clr-light);
+  background-color: var(--clr-primary);
+  cursor: pointer;
+  font-size: var(--fs-small);
+}
+
+.restart:hover{
+  background-color: var(--clr-primary-dark);
+}
+
+.restart:disabled{
+  background-color: var(--clr-primary-dark);
+  color: var(--clr-dark);
 }
 
 /* Utility classes */
