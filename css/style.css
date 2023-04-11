@@ -18,7 +18,8 @@
 
   --fw-600: 600;
 
-  --fs-large: 2rem;
+  --fs-large: 3rem;
+  --fs-medium: 2rem;
 }
 
 body,
@@ -46,8 +47,7 @@ a {
   height: 100%;
 }
 
-header,
-main {
+header {
   display: grid;
   place-items: center;
 }
@@ -55,6 +55,13 @@ main {
 footer {
   display: grid;
   place-content: center;
+}
+
+main {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
 }
 
 .gameboard {
@@ -75,7 +82,7 @@ footer {
   background-color: var(--clr-primary-light);
   color: var(--clr-primary);
   font-weight: var(--fw-600);
-  font-size: var(--fs-large);
+  font-size: var(--fs-medium);
 }
 
 .boardTile:hover {
@@ -98,4 +105,12 @@ footer {
 
 .text-clr-dark {
   color: var(--clr-dark);
+}
+
+.fs-medium{
+  font-size: var(--fs-medium);
+}
+
+.fs-large{
+  font-size: var(--fs-large);
 }
