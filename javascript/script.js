@@ -1,3 +1,6 @@
+//TODO: Divide gameModule into smaller modules: board, gameController,
+//      display etc.
+
 const gameModule = (() => {
   const gameboard = [
     ["", "", ""],
@@ -108,11 +111,9 @@ const gameModule = (() => {
   function _updateResult() {
     if (_checkForWin()) {
       _disableBoard();
-      restart.removeAttribute("disabled");
       result.textContent = `Player ${currentPlayer} won the game!`;
     } else if (_checkForTie()) {
       _disableBoard();
-      restart.removeAttribute("disabled");
       result.textContent = `It's a tie!`;
     } else {
       _togglePlayer();
@@ -129,14 +130,11 @@ const gameModule = (() => {
   }
 
   function _reset() {
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        gameboard[i][j] = "";
-      }
-    }
+    gameboard[0] = ["", "", ""];
+    gameboard[1] = ["", "", ""];
+    gameboard[2] = ["", "", ""];
     currentPlayer = "X";
     result.textContent = `Player ${currentPlayer} turn.`;
-    restart.disabled = true;
     _displayBoard();
   }
 
