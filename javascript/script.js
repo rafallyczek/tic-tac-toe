@@ -94,12 +94,7 @@ const gameController = (() => {
   }
 
   //TODO: implement minimax algorithm
-  function _minimax(depth) {
-    let value = _currentPlayer === "O" ? 2 : -2;
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {}
-    }
-  }
+  function _minimax(depth) {}
 
   return { getCurrentPlayer, playerMove };
 })();
