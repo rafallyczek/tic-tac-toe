@@ -51,6 +51,7 @@ const gameController = (() => {
   function playerMove(x, y) {
     if (gameBoard.getBoardTile(x, y) === "") {
       gameBoard.setBoardTile(x, y, _currentPlayer);
+      display.updateTile(x, y, _currentPlayer);
       if (_checkForWin()) {
         display.disableBoard();
         display.updateResult(`Player ${_currentPlayer} has won the game!`);
@@ -101,6 +102,7 @@ const gameController = (() => {
 
 //Updates display
 const display = (() => {
+  const _boardTiles = [[],[],[]];
   //DOM
   const _boardContainer = document.querySelector(".gameboard");
   const _result = document.querySelector(".result");
@@ -136,10 +138,10 @@ const display = (() => {
         boardTile.classList.add("boardTile");
         boardTile.textContent = gameBoard.getBoardTile(i, j);
         boardTile.addEventListener("click", function () {
-            this.textContent = gameController.getCurrentPlayer();
             gameController.playerMove(i, j);
           });
         _boardContainer.appendChild(boardTile);
+        _boardTiles[i][j] = boardTile;
       }
     }
   }
@@ -163,5 +165,9 @@ const display = (() => {
     _result.textContent = message;
   }
 
-  return { displayBoard, disableBoard, updateResult };
+  function updateTile(x, y, playerChar){
+    _boardTiles[x][y].textContent = playerChar;
+  }
+
+  return { displayBoard, disableBoard, updateResult, updateTile };
 })();
